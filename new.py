@@ -50,6 +50,8 @@ uploaded_image = st.file_uploader("Upload an image:", type=["jpg", "jpeg", "png"
 # Generate Image
 if st.button("Generate"):
   with st.spinner("Generating image..."):
+    # Progress bar
+    progress_bar = st.progress(0)
     if uploaded_image is not None:
       image = Image.open(uploaded_image)
       # Use the image as a starting point for the generation
@@ -61,6 +63,6 @@ if st.button("Generate"):
     st.image(generated_image, caption="Generated Image", use_column_width=True)
 
 # Save the generated image (optional)
-if generated_image is not None:
-    st.write ("If you want to save the generated image click here")
+  if generated_image is not None:
+    st.write("If you want to download the generated image click the button below")
     st.download_button("Download Image", generated_image, file_name="generated_image.png", mime="image/png")
