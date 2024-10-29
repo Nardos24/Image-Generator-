@@ -30,6 +30,7 @@ st.markdown(
     )
 
 # Load the model
+generated_image = None
 model_id = "stabilityai/stable-diffusion-2"
 scheduler = EulerDiscreteScheduler.from_pretrained(model_id, subfolder="scheduler")
 pipe = StableDiffusionPipeline.from_pretrained(model_id, scheduler=scheduler, torch_dtype=torch.float32)
@@ -46,7 +47,6 @@ prompt = st.text_input("Enter your text prompt:")
 
 # Upload image (optional)
 uploaded_image = st.file_uploader("Upload an image:", type=["jpg", "jpeg", "png"])
-
 # Generate Image
 if st.button("Generate"):
   with st.spinner("Generating image..."):
@@ -61,8 +61,6 @@ if st.button("Generate"):
     st.image(generated_image, caption="Generated Image", use_column_width=True)
 
 # Save the generated image (optional)
-st.write ("If you want to save the generated image click here")
- 
-if st.button("Save Image"):
-  if generated_image is not None:
+if generated_image is not None:
+    st.write ("If you want to save the generated image click here")
     st.download_button("Download Image", generated_image, file_name="generated_image.png", mime="image/png")
